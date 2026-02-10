@@ -47,6 +47,28 @@ public class FootballerServiceImpl implements FootballerService {
                 .map(this::mapToDTO)
                 .collect(Collectors.toList());
     }
+    @Override
+    public FootballerDTO update(Long id, FootballerDTO dto) {
+        Footballer footballer = footballerRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Footballer not found with id: " + id));
+
+        footballer.setFirstName(dto.getFirstName());
+        footballer.setLastName(dto.getSurName());
+        footballer.setAge(dto.getAge());
+        footballer.setPosition(dto.getPosition());
+        footballer.setClub(dto.getClub());
+        footballer.setMarketValue(dto.getMarketValue());
+
+        Footballer updated = footballerRepository.save(footballer);
+        return mapToDTO(updated);
+    }
+
+    @Override
+    public void delete(Long id) {
+        Footballer footballer = footballerRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Footballer not found with id: " + id));
+        footballerRepository.delete(footballer);
+    }
     private FootballerDTO mapToDTO(Footballer footballer) {
         return FootballerDTO.builder()
                 .id(footballer.getId())

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/api/footballer")
 public class FootballerController {
     private final FootballerService footballerService;
     @Autowired
@@ -27,6 +27,17 @@ public class FootballerController {
     @GetMapping
     public ResponseEntity<List<FootballerDTO>> getAll() {
         return ResponseEntity.ok(footballerService.getAll());
+    }
+    @PutMapping("/{id}")
+    public ResponseEntity<FootballerDTO> update(
+            @PathVariable Long id,
+            @RequestBody FootballerDTO dto) {
+        return ResponseEntity.ok(footballerService.update(id, dto));
+    }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        footballerService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }
 

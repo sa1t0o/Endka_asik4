@@ -11,6 +11,8 @@ public interface FootballerService {
     FootballerDTO create(FootballerDTO dto);
     FootballerDTO getById(Long id);
     List<FootballerDTO> getAll();
+    FootballerDTO update(Long id, FootballerDTO dto);
+    void delete(Long id);
 }
 
 
